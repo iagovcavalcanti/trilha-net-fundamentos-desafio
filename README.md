@@ -35,4 +35,26 @@ Por último, deverá ser feito um menu interativo com as seguintes ações imple
 
 
 ## Solução
-O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+O método AdicionarVeiculo foi modificado e incluído algumas verificações:
+1. Verifica se é uma placa válida no padrão XXX-1234. Para isso foi desenvolvido um médoto de ValidarPlaca através de um Regex;
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/1f7a3f73-f231-41c4-bec4-f6a5d86c1f4b)
+
+2. Verifica se o usuário não inseriu nenhuma informação e imprime uma mensagem de erro vermelha;
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/9b054f72-1ef2-443a-bc02-ad09e4ea7a2c)
+
+3. Verifica se a placa inserida já foi cadastrada e imprime uma mensagem de erro vermelha;
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/f4b1734e-61d7-45db-b145-a42f3fd7b820)
+
+4. Caso nenhuma dessas condições sejam verdadeiras, adiciona a placa na lista.
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/acf7ce57-5ef5-4678-92f5-88167d7b64a8)
+
+Listar veículos:
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/6c144361-a3d3-4352-b48a-b37b7f5d4adc)
+
+Remover veículos:
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/fffb13a5-f488-408a-9f1f-3b904db67c97)
+
+
+
+
+
