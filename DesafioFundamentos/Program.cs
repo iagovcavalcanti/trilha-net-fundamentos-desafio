@@ -48,7 +48,9 @@ while (exibirMenu)
             break;
 
         default:
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Opção inválida");
+            Console.ResetColor();
             break;
     }
 
