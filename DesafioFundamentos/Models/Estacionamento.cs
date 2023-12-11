@@ -6,8 +6,14 @@ namespace DesafioFundamentos.Models
     {
         private decimal precoInicial = 0;
         private decimal precoPorHora = 0;
-        private List<string> veiculos = new List<string>();
+        private List<Carro> listaVeiculos = new List<Carro>();
 
+        public class Carro
+        {
+            public string Placa { get; set; }
+            public DateTime HoraEntrada { get; set; }
+
+        }
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
         {
             this.precoInicial = precoInicial;
@@ -16,24 +22,24 @@ namespace DesafioFundamentos.Models
 
         public void AdicionarVeiculo()
         {
-            string veiculo = string.Empty;
+            var veiculo = new Carro();
             Console.WriteLine("Digite a placa do veículo para estacionar:");
-            veiculo = Console.ReadLine();
+            veiculo.Placa = Console.ReadLine();
 
-            veiculo = veiculo.Replace(" ", "");
-            if (string.IsNullOrEmpty(veiculo))
+            veiculo.Placa = veiculo.Placa.Replace(" ", "");
+            if (string.IsNullOrEmpty(veiculo.Placa))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Por favor digite algo");
                 Console.ResetColor();
             }
-            else if (ValidarPlaca(veiculo) == false)
+            else if (!ValidarPlaca(veiculo.Placa))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Por favor digitar uma placa válida no formato XXX-1234 \nApenas letras maúsculas e números");
                 Console.ResetColor();
             }
-            else if (veiculos.Any(x => x == veiculo))
+            else if (listaVeiculos.Any(x => x.Placa.ToUpper() == veiculo.Placa.ToUpper()))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Veículo já cadastrado.");
@@ -41,7 +47,9 @@ namespace DesafioFundamentos.Models
             }
             else
             {
-                veiculos.Add(veiculo);
+                veiculo.HoraEntrada = DateTime.Now;
+                listaVeiculos.Add(veiculo);
+
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Veículo adicionado com sucesso!");
                 Console.ResetColor();
@@ -57,28 +65,31 @@ namespace DesafioFundamentos.Models
         public void RemoverVeiculo()
         {
             Console.WriteLine("Digite a placa do veículo para remover:");
-            string placa = Console.ReadLine();
+            string placa = Console.ReadLine() ?? string.Empty;
+            Carro veiculo = listaVeiculos.FirstOrDefault(x => x.Placa.ToUpper() == placa.ToUpper());
 
 
-            if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
+            if (veiculo != null)
             {
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
+                DateTime horaAtual = DateTime.Now;
+                TimeSpan tempoEstacionado = horaAtual - veiculo.HoraEntrada;
 
-                string horas = string.Empty;
-                decimal valorTotal = 0;
-                horas = Console.ReadLine();
-                if (Convert.ToInt32(horas) > 0)
-                {
-                    valorTotal = precoInicial + (Convert.ToInt32(horas) * precoPorHora);
-                }
-                bool removido = veiculos.Remove(placa);
-                if (removido == true)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
-                    Console.ResetColor();
-                }
+                double horasEstacionada = Math.Ceiling(tempoEstacionado.TotalHours);
 
+                decimal valorTotal = precoInicial;
+
+ 
+                if (horasEstacionada > 1)
+                {
+                    valorTotal += (decimal)(horasEstacionada - 1) * precoPorHora;
+                }
+                
+                
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}. Tempo estacionado: {FormatarTempo(tempoEstacionado)}");
+                Console.ResetColor();
+
+                listaVeiculos.Remove(veiculo);
             }
             else
             {
@@ -88,15 +99,20 @@ namespace DesafioFundamentos.Models
             }
         }
 
+        private string FormatarTempo (TimeSpan tempo)
+        {
+            return $"{tempo.Hours:D2}:{tempo.Minutes:D2}:{tempo.Seconds:D2}";
+        }
+
         public void ListarVeiculos()
         {
             // Verifica se há veículos no estacionamento
-            if (veiculos.Any())
+            if (listaVeiculos.Any())
             {
                 Console.WriteLine("Os veículos estacionados são:");
-                for (int i = 0; i < veiculos.Count; i++)
+                for (int i = 0; i < listaVeiculos.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {veiculos[i]}");
+                    Console.WriteLine($"{i + 1}. {listaVeiculos[i].Placa}");
                 }
 
             }
