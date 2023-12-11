@@ -54,6 +54,11 @@ Listar veículos:
 Remover veículos:
 ![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/fffb13a5-f488-408a-9f1f-3b904db67c97)
 
+## Melhoria
+Foi implementado uma melhoria onde acrescentei uma classe chamada Carros que recebe como parâmetros a horaEntrada e a Placa. Ao cadastrar um novo carro a HoraEntrada armazena a hora do cadastro com o DateTime.Now
+Ao remover o veículo esse parâmetro é utilizado para calcular o tempo de estacionamento e valor a ser cobrado, sem ter a necessidade do usuário incluir mais esse dado.
+
+![image](https://github.com/iagovcavalcanti/trilha-net-fundamentos-desafio/assets/149210815/244a023b-d519-4f04-bf39-f257456e569c)
 
 
 
